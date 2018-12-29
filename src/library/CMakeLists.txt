@@ -4,7 +4,7 @@ project(Library)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 set(SOURCE_FILES
-        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h src/Repository.cpp include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h)
+        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h)
 
 add_library(Library ${SOURCE_FILES})
 
@@ -43,8 +43,8 @@ endif()
 
 set(SOURCE_TEST_FILES
         test/master.cpp
-        test/Test.cpp
-        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h src/Repository.cpp include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h)
+        test/RepositoryTest.cpp
+        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h)
 
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -63,4 +63,8 @@ add_custom_target(check ${CMAKE_COMMAND} -E env CTEST_OUTPUT_ON_FAILURE=1 BOOST_
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR})
 
 enable_testing()
-add_test(LibraryTest Test)
+add_test(LibraryTest Test
+        --report_level=detailed
+        --log_level=all
+        --color_output=yes
+        )
