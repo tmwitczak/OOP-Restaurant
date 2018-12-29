@@ -1,6 +1,0 @@
-TODO:
-- Managaer ma tworzyc obiekty i dodawac do repo (createTable)
-- Usuwamy isSmoking
-- Dodaj relacje managerowie-klasy
-- Manager ma sprawdzać poprawność tworzenia obiektów
-- Nie robimy id w kliencie i table
