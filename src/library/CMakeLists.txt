@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.4)
 project(Library)
 
-#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
 set(SOURCE_FILES
         src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h)

@@ -10,11 +10,19 @@ namespace Restaurant
 	class Repository
 	{
 	public:
-		bool add(T element);
-		void remove(T element);
-		void saveToFile(std::string filename) const;
-		void readFromFile(std::string filename);
-		std::vector<T> getAll() const;
+		Repository() = default;
+		Repository(std::vector<T> const &elements);
+		Repository(Repository const &) = delete;
+		Repository(Repository &&) = delete;
+		Repository &operator=(Repository const &) = delete;
+		Repository &operator=(Repository &&) = delete;
+		virtual ~Repository() = default;
+
+		bool add(T const &element);
+		void remove(T const &element);
+		void saveToFile(std::string const &filename) const;
+		void readFromFile(std::string const &filename);
+		std::vector<T> const &getAll() const;
 
 	protected:
 		std::vector<T> elements;
@@ -22,35 +30,43 @@ namespace Restaurant
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
-bool Restaurant::Repository<T>::add(T element)
+Restaurant::Repository<T>::Repository(std::vector<T> const &elements)
+	:
+		elements(elements)
 {
-	// TODO: Implement bool Restaurant::Repository<T>::add(T element)
-	return false;
 }
 //--------------------------------------------------------------------------------------------------
 template <typename T>
-void Restaurant::Repository<T>::remove(T element)
+bool Restaurant::Repository<T>::add(T const &element)
 {
-	// TODO: Implement void Restaurant::Repository<T>::remove(T element)
+	elements.push_back(element);
+
+	// TODO: Is returning bool in this case even necessary? Also should we do try,catch here?
+	return true;
 }
 //--------------------------------------------------------------------------------------------------
 template <typename T>
-void Restaurant::Repository<T>::saveToFile(std::string filename) const
+void Restaurant::Repository<T>::remove(T const &element)
+{
+	elements.erase(std::remove(elements.begin(), elements.end(), element), elements.end());
+}
+//--------------------------------------------------------------------------------------------------
+template <typename T>
+void Restaurant::Repository<T>::saveToFile(std::string const &filename) const
 {
 	// TODO: Implement void Restaurant::Repository<T>::saveToFile(std::string filename) const
 }
 //--------------------------------------------------------------------------------------------------
 template <typename T>
-void Restaurant::Repository<T>::readFromFile(std::string filename)
+void Restaurant::Repository<T>::readFromFile(std::string const &filename)
 {
 	// TODO: Implement void Restaurant::Repository<T>::readFromFile(std::string filename)
 }
 //--------------------------------------------------------------------------------------------------
 template <typename T>
-std::vector<T> Restaurant::Repository<T>::getAll() const
+std::vector<T> const &Restaurant::Repository<T>::getAll() const
 {
-	// TODO: Implement std::vector<T> Restaurant::Repository<T>::getAll() const
-	return std::vector<T>();
+	return elements;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif /* RESTAURANT_REPOSITORY_H */
