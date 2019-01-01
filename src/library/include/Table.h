@@ -5,6 +5,13 @@ namespace Restaurant
 {
 	class Table
 	{
+	public:
+		Table(int const &seatCount);
+
+		int getSeatCount() const;
+
+	private:
+		int const seatCount;
 	};
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
