@@ -31,8 +31,7 @@ namespace Restaurant
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 template <typename T>
 Restaurant::Repository<T>::Repository(std::vector<T> const &elements)
-	:
-		elements(elements)
+	:	elements(elements)
 {
 }
 //--------------------------------------------------------------------------------------------------
