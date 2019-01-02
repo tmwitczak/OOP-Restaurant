@@ -4,7 +4,7 @@ project(Library)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
 set(SOURCE_FILES
-        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h)
+        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h src/Basic.cpp include/Basic.h src/Premium.cpp include/Premium.h)
 
 add_library(Library ${SOURCE_FILES})
 
@@ -44,7 +44,7 @@ endif()
 set(SOURCE_TEST_FILES
         test/master.cpp
         test/RepositoryTest.cpp
-        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h test/TableTest.cpp)
+        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h test/TableTest.cpp test/ReservationTest.cpp src/Basic.cpp include/Basic.h src/Premium.cpp include/Premium.h)
 
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include
