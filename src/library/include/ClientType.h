@@ -5,6 +5,11 @@ namespace Restaurant
 {
 	class ClientType
 	{
+	public:
+		virtual ~ClientType() = default;
+
+		virtual double getDiscountPercentage() const = 0;
+		virtual int getMaximumTableCount() const = 0;
 	};
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
