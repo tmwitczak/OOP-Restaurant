@@ -34,9 +34,9 @@ namespace Restaurant
 	private:
 		Client_Ptr 				const client;
 		std::vector<Table_Ptr> 	const tables;
-        boost::uuids::uuid 	          uuid; 		// TODO: Replace int with UUID
-        DateTime_Ptr 			const beginTime; 	// TODO: Replace int with localDateTime
-        DateTime_Ptr 			const endTime; 		// TODO: Replace int with localDateTime
+        boost::uuids::uuid 	          uuid;
+        DateTime_Ptr 			const beginTime;
+        DateTime_Ptr 			const endTime;
 	};
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
