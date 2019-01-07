@@ -3,19 +3,28 @@
 #include "Reservation.h"
 #include "Client.h"
 #include "Table.h"
+#include <boost/date_time/local_time/local_time.hpp>
+#include <boost/date_time/gregorian/gregorian.hpp>
 //--------------------------------------------------------------------------------------------------
+using namespace boost::gregorian;
+using namespace boost::local_time;
+using namespace boost::posix_time;
+//--------------------------------------------------------------------------------------------------
+
 template <typename T>
 bool compareVectors(std::vector<T> const &container1, std::vector<T> const &container2)
 {
 	return std::equal(container1.begin(), container1.begin(), container2.begin());
 }
-std::tuple<Restaurant::Client_Ptr, std::vector<Restaurant::Table_Ptr>, int, int> getReservationParameters()
+std::tuple<Restaurant::Client_Ptr, std::vector<Restaurant::Table_Ptr>, Restaurant::DateTime_Ptr, Restaurant::DateTime_Ptr> getReservationParameters()
 {
 	return	{	std::make_shared<Restaurant::Client>(
 						Restaurant::Client("John", "Smith", "123456789", "basic")),
 		  		{ std::make_shared<Restaurant::Table>(Restaurant::Table(2)) },
-				2,
-				4
+		  		{ std::make_shared<local_date_time>(
+						local_date_time( ptime(date(2019, 01, 07), hours(18)), time_zone_ptr (new posix_time_zone("CET+01"))) )} ,
+				{ std::make_shared<local_date_time>(
+						local_date_time( ptime(date(2019, 01, 07), hours(20)), time_zone_ptr (new posix_time_zone("CET+01"))) )}
 			};
 }
 //--------------------------------------------------------------------------------------------------
@@ -47,7 +56,7 @@ BOOST_AUTO_TEST_SUITE(Reservation_CoreFunctionality_TestSuite)
 		auto const [client, tables, beginTime1, endTime] = getReservationParameters();
 
 		Restaurant::Reservation reservation(client, tables, beginTime1, endTime);
-		int const beginTime2 = reservation.getBeginTime();
+		Restaurant::DateTime_Ptr const beginTime2 = reservation.getBeginTime();
 
 		BOOST_REQUIRE_EQUAL(beginTime1, beginTime2);
 	}
@@ -56,7 +65,7 @@ BOOST_AUTO_TEST_SUITE(Reservation_CoreFunctionality_TestSuite)
 		auto const [client, tables, beginTime, endTime1] = getReservationParameters();
 
 		Restaurant::Reservation reservation(client, tables, beginTime, endTime1);
-		int const endTime2 = reservation.getEndTime();
+		Restaurant::DateTime_Ptr const endTime2 = reservation.getEndTime();
 
 		BOOST_REQUIRE_EQUAL(endTime1, endTime2);
 	}
