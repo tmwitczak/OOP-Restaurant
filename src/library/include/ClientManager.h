@@ -36,6 +36,13 @@ namespace Restaurant
 		std::vector<Client_Ptr> getAllClients() const;
 		std::string getInfo() const;
 
+	private:
+		//------------------------------------------------------------------------ Parameter check <
+		std::string const &checkFirstName(std::string const &firstName) const;
+		std::string const &checkLastName(std::string const &lastName) const;
+		std::string const &checkTelephoneNumber(std::string const &telephoneNumber) const;
+		std::string const &checkClientType(std::string const &clientType) const;
+
 	//----------------------------------------------------------------------------------- [ Fields ]
 	private:
 		ClientRepository clientRepository;
