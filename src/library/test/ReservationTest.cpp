@@ -10,11 +10,13 @@ using namespace boost::gregorian;
 using namespace boost::local_time;
 using namespace boost::posix_time;
 //--------------------------------------------------------------------------------------------------
-
 template <typename T>
-bool compareVectors(std::vector<T> const &container1, std::vector<T> const &container2)
+bool compareVectors(std::vector<T> const &vector1, std::vector<T> const &vector2)
 {
-	return std::equal(container1.begin(), container1.begin(), container2.begin());
+	if(vector1.size() < vector2.size())
+		return std::equal(vector1.begin(), vector1.end(), vector2.begin());
+	else
+		return std::equal(vector2.begin(), vector2.end(), vector1.begin());
 }
 std::tuple<Restaurant::Client_Ptr, std::vector<Restaurant::Table_Ptr>, Restaurant::DateTime_Ptr, Restaurant::DateTime_Ptr> getReservationParameters()
 {
