@@ -9,7 +9,7 @@ Restaurant::TableManager::makeTable(int &seatCount)
     return table;
 
 }
-
+//--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Table_Ptr>
 Restaurant::TableManager::makeTables(int &tableCount, int &seatCount)
 {
@@ -23,41 +23,34 @@ Restaurant::TableManager::makeTables(int &tableCount, int &seatCount)
     }
     return tables;
 }
-
+//--------------------------------------------------------------------------------------------------
 /*void Restaurant::TableManager::removeTable(Restaurant::Table_Ptr &table)
 {
     tableRepository.remove(table);
 }*/
-
+//--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Table_Ptr>
 Restaurant::TableManager::findTableBySeatCount(int &seatCount)
 {
     return std::vector<Restaurant::Table_Ptr>();
 }
-
+//--------------------------------------------------------------------------------------------------
 void Restaurant::TableManager::saveTablesToFile(std::string const &filename) const
 {
 
 }
-
+//--------------------------------------------------------------------------------------------------
 void Restaurant::TableManager::readTablesFromFile(std::string const &filename)
 {
 
 }
-
+//--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Table_Ptr> Restaurant::TableManager::getAllTables() const
 {
     return tableRepository.getAll();
 }
-
+//--------------------------------------------------------------------------------------------------
 std::string Restaurant::TableManager::getInfo() const {
     return std::__cxx11::string();
 }
-
-
-
-
-
-
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////

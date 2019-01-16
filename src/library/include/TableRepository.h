@@ -10,8 +10,7 @@ namespace Restaurant
 
 	typedef std::shared_ptr<Table> Table_Ptr;
 }
-
-
+//--------------------------------------------------------------------------------------------------
 namespace Restaurant
 {
 	class TableRepository
