@@ -1,26 +1,34 @@
 #ifndef RESTAURANT_CLIENTREPOSITORY_H
 #define RESTAURANT_CLIENTREPOSITORY_H
-////////////////////////////////////////////////////////////////////////////////////////////////////
-//#include "Client.h"
+/////////////////////////////////////////////////////////////////////////////////// Included headers
 #include "Repository.h"
+#include <string>
+#include <vector>
 #include <memory>
 
 namespace Restaurant
 {
+	/////////////////////////////////////////////////////////////////////////// Forward declarations
 	class Client;
 
+	/////////////////////////////////////////////////////////////////////////////////////// Typedefs
 	typedef std::shared_ptr<Client> Client_Ptr;
-}
-//--------------------------------------------------------------------------------------------------
-namespace Restaurant
-{
+
+	/////////////////////////////////////////////////////////////////////////////// Class definition
 	class ClientRepository
 			: public Repository<Client_Ptr>
 	{
+	//---------------------------------------------------------------------------------- [ Methods ]
 	public:
-		std::vector<Client_Ptr> findClientsByFirstName(std::string firstName) const;
-		std::vector<Client_Ptr> findClientsByLastName(std::string lastName) const;
-		std::vector<Client_Ptr> findClientsByTelephoneNumber(std::string telephoneNumber) const;
+		//------------------------------------------------------------------------- Search methods <
+		std::vector<Client_Ptr> findClientsByFirstName(std::string const &firstName) const;
+		std::vector<Client_Ptr> findClientsByLastName(std::string const &lastName) const;
+		std::vector<Client_Ptr> findClientsByTelephoneNumber(
+				std::string const &telephoneNumber) const;
+
+	private:
+		std::vector<Client_Ptr> findClientsByValue(std::string const &value,
+				std::string const &type) const;
 	};
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

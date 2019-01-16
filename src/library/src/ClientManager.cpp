@@ -26,19 +26,19 @@ void Restaurant::ClientManager::removeClient(Restaurant::Client_Ptr const &clien
 std::vector<Restaurant::Client_Ptr>
 Restaurant::ClientManager::findClientsByFirstName(std::string const &firstName) const
 {
-	return {};//clientRepository.findClientsByFirstName(firstName);
+	return clientRepository.findClientsByFirstName(firstName);
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Client_Ptr>
 Restaurant::ClientManager::findClientsByLastName(std::string const &lastName) const
 {
-	return {};//clientRepository.findClientsByLastName(lastName);
+	return clientRepository.findClientsByLastName(lastName);
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Client_Ptr>
 Restaurant::ClientManager::findClientsByTelephoneNumber(std::string const &telephoneNumber) const
 {
-	return {};//clientRepository.findClientsByTelephoneNumber(telephoneNumber);
+	return clientRepository.findClientsByTelephoneNumber(telephoneNumber);
 }
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ClientManager::saveClientsToFile(std::string const &filename) const
