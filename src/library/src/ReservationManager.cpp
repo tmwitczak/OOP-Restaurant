@@ -9,6 +9,10 @@
 #include <sstream>
 #include <boost/date_time/local_time/local_time.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
+
+using namespace boost::gregorian;
+using namespace boost::local_time;
+using namespace boost::posix_time;
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 Restaurant::Reservation_Ptr
 Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &client,
@@ -32,11 +36,25 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
 {
     Restaurant::Reservation_Ptr reservation = std::make_shared<Restaurant::Reservation>(client, tables,
                                                                                         beginTime, endTime);
-    if( (endTime->date() - beginTime->date() ).days() < 0) //TODO: left side +1 ???
+    if( endTime > beginTime )
         throw  Restaurant::RestaurantException("EndTime can not be before BeginTime!");
+
+
+    for(auto &table : tables)
+    {
+        for(auto &reservation : reservationRepository.findReservationByTable(table))
+        {
+            if( ((reservation->getBeginTime() >= beginTime) && (reservation->getBeginTime() <= endTime))
+                ||((reservation->getEndTime()   >= beginTime) && (reservation->getEndTime()   <= endTime)))
+                throw Restaurant::RestaurantException("This table is unavailable at this time!");
+        }
+    }
+
     reservationRepository.add(reservation);
     return reservation;
 }
+
+
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ReservationManager::cancelReservation(Restaurant::Reservation_Ptr &reservation)
 {
@@ -141,4 +159,5 @@ Restaurant::ReservationManager::checkTables(const std::vector<Restaurant::Table_
         throw Restaurant::RestaurantException("Tables vector can not be empty!");
     return tables;
 }
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
