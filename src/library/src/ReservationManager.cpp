@@ -27,13 +27,13 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
     return reservation;
 }
 //--------------------------------------------------------------------------------------------------
-/*void Restaurant::ReservationManager::cancelReservation(Restaurant::Reservation_Ptr &reservation)
+void Restaurant::ReservationManager::cancelReservation(Restaurant::Reservation_Ptr &reservation)
 {
     reservationRepository.remove(reservation);
-}*/
+}
 //--------------------------------------------------------------------------------------------------
 /*
- * void Restaurant::ReservationManager::cancelReservation(boost::uuids::uuid ID)
+void Restaurant::ReservationManager::cancelReservation(boost::uuids::uuid ID)
 {
     reservationRepository.remove( findReservationByID(ID) );
 }*/

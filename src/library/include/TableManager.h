@@ -18,7 +18,7 @@ namespace Restaurant
 	public:
 		Table_Ptr makeTable(int &seatCount);
 		std::vector<Table_Ptr> makeTables(int &tableCount, int &seatCount);
-		void removeTable(Table_Ptr &table);
+		void removeTable(const Table_Ptr &table);
 
 		//------------------------------------------------------------------------- Search methods <
 		std::vector<Table_Ptr> findTableBySeatCount(int &seatCount);

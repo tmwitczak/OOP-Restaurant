@@ -24,10 +24,10 @@ Restaurant::TableManager::makeTables(int &tableCount, int &seatCount)
     return tables;
 }
 //--------------------------------------------------------------------------------------------------
-/*void Restaurant::TableManager::removeTable(Restaurant::Table_Ptr &table)
+void Restaurant::TableManager::removeTable(const Restaurant::Table_Ptr &table)
 {
     tableRepository.remove(table);
-}*/
+}
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Table_Ptr>
 Restaurant::TableManager::findTableBySeatCount(int &seatCount)

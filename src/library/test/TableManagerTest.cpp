@@ -52,7 +52,7 @@ BOOST_AUTO_TEST_SUITE(TableManager_CoreFunctionality_TestSuite)
 
         BOOST_REQUIRE_EQUAL( compareVectors({ table }, allTables), true);
     }
-    /*BOOST_AUTO_TEST_CASE(TableManager_MakeTableThenRemoveTableAndGetAllTables_TestCase)
+    BOOST_AUTO_TEST_CASE(TableManager_MakeTableThenRemoveTableAndGetAllTables_TestCase)
     {
         Restaurant::TableManager tableManager;
 
@@ -65,5 +65,5 @@ BOOST_AUTO_TEST_SUITE(TableManager_CoreFunctionality_TestSuite)
         std::vector<Restaurant::Table_Ptr> allTables = tableManager.getAllTables();
 
         BOOST_REQUIRE_EQUAL( compareVectors({ table2 }, allTables), true);
-    }*/
+    }
 BOOST_AUTO_TEST_SUITE_END()
