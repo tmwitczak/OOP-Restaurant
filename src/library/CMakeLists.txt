@@ -44,7 +44,7 @@ endif()
 set(SOURCE_TEST_FILES
         test/master.cpp
         test/RepositoryTest.cpp
-        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h test/TableTest.cpp test/ReservationTest.cpp src/Basic.cpp include/Basic.h src/Premium.cpp include/Premium.h test/ClientManagerTest.cpp test/TableManagerTest.cpp test/ReservationManagerTest.cpp)
+        src/Client.cpp include/Client.h src/Table.cpp include/Table.h src/Reservation.cpp include/Reservation.h src/ReservationManager.cpp include/ReservationManager.h src/TableManager.cpp include/TableManager.h src/TableRepository.cpp include/TableRepository.h src/ReservationRepository.cpp include/ReservationRepository.h src/ClientRepository.cpp include/ClientRepository.h src/ClientManager.cpp include/ClientManager.h include/Repository.h src/ClientType.cpp include/ClientType.h src/RestaurantException.cpp include/RestaurantException.h test/TableTest.cpp test/ReservationTest.cpp src/Basic.cpp include/Basic.h src/Premium.cpp include/Premium.h test/ClientManagerTest.cpp test/TableManagerTest.cpp test/ReservationManagerTest.cpp test/ClientTest.cpp test/HelperFunctions.cpp test/HelperFunctions.h)
 
 include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/include

@@ -3,6 +3,7 @@
 #include "Client.h"
 #include "ClientManager.h"
 #include "RestaurantException.h"
+#include "HelperFunctions.h"
 #include <string>
 #include <vector>
 //--------------------------------------------------------------------------------------------------
@@ -13,15 +14,6 @@ bool compareVectors(std::vector<T> const &vector1, std::vector<T> const &vector2
 		return std::equal(vector1.begin(), vector1.end(), vector2.begin());
 	else
 		return std::equal(vector2.begin(), vector2.end(), vector1.begin());
-}
-std::tuple<std::string, std::string, std::string, std::string> getClientParameters()
-{
-	return 	{
-				/* firstName */ 		"John",
-				/* lastName */ 			"Smith",
-				/* telephoneNumber */ 	"123456789",
-				/* clientType */ 		"basic"
-			};
 }
 bool operator==(Restaurant::Client const &client1,
 				Restaurant::Client const &client2)

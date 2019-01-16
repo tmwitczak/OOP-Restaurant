@@ -1,8 +1,8 @@
 #ifndef RESTAURANT_CLIENTMANAGER_H
 #define RESTAURANT_CLIENTMANAGER_H
 /////////////////////////////////////////////////////////////////////////////////// Included headers
-#include <boost/date_time/local_time/local_date_time.hpp>
 #include "ClientRepository.h"
+#include <boost/date_time/local_time/local_date_time.hpp>
 
 namespace Restaurant
 {
