@@ -22,8 +22,23 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
 {
     std::vector<Table_Ptr> tables;
     tables.push_back(table);
-    Restaurant::Reservation_Ptr reservation = std::make_shared<Restaurant::Reservation>(client, tables,
-            beginTime, endTime);
+
+    if( endTime > beginTime )
+        throw  Restaurant::RestaurantException("EndTime can not be before BeginTime!");
+
+
+    for(auto &table : tables)
+    {
+        for(auto &reservation : reservationRepository.findReservationByTable(table))
+        {
+            if( ((reservation->getBeginTime() >= beginTime) && (reservation->getBeginTime() <= endTime))
+                ||((reservation->getEndTime()   >= beginTime) && (reservation->getEndTime()   <= endTime)))
+                throw Restaurant::RestaurantException("This table is unavailable at this time!");
+        }
+    }
+    Restaurant::Reservation_Ptr reservation = std::make_shared<Restaurant::Reservation>(checkClient(client),
+            checkTables(tables),
+            checkBeginTime(beginTime), checkEndTime(endTime));
     reservationRepository.add(reservation);
     return reservation;
 }
@@ -34,8 +49,9 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
                                                 const Restaurant::DateTime_Ptr &beginTime,
                                                 const Restaurant::DateTime_Ptr &endTime)
 {
-    Restaurant::Reservation_Ptr reservation = std::make_shared<Restaurant::Reservation>(client, tables,
-                                                                                        beginTime, endTime);
+    Restaurant::Reservation_Ptr reservation = std::make_shared<Restaurant::Reservation>(checkClient(client),
+                                                                                        checkTables(tables),
+                                                                                        checkBeginTime(beginTime), checkEndTime(endTime));
     if( endTime > beginTime )
         throw  Restaurant::RestaurantException("EndTime can not be before BeginTime!");
 
