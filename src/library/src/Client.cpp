@@ -11,10 +11,6 @@ Restaurant::Client::Client(std::string const &firstName, std::string const &last
 {
 }
 //--------------------------------------------------------------------------------------------------
-Restaurant::Client::~Client()
-{
-}
-//--------------------------------------------------------------------------------------------------
 std::string Restaurant::Client::getFirstName() const
 {
 	return firstName;
@@ -47,10 +43,7 @@ Restaurant::ClientType_Ptr Restaurant::Client::makeClientType(
 		return std::make_shared<Restaurant::Basic>();
 	else if(clientTypeString == "premium")
 		return std::make_shared<Restaurant::Premium>();
-	/* TODO: Exceptions
-	 * else
-		throw;*/
 	else
-		return std::make_shared<Restaurant::Premium>(); // TODO: Exceptions
+		return nullptr;		// This should never happen when creating Client with ClientManager
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
