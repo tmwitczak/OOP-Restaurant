@@ -1,5 +1,6 @@
 #include <string>
 #include <tuple>
+#include <vector>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 std::tuple<std::string, std::string, std::string, std::string> getClientParameters()
 {

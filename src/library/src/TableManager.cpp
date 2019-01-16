@@ -27,7 +27,7 @@ Restaurant::TableManager::makeTables(int &tableCount, int &seatCount)
     return tables;
 }
 //--------------------------------------------------------------------------------------------------
-void Restaurant::TableManager::removeTable(const Restaurant::Table_Ptr &table)
+void Restaurant::TableManager::removeTable(Restaurant::Table_Ptr const &table)
 {
     tableRepository.remove(table);
 }

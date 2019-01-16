@@ -5,6 +5,7 @@
 #include "ReservationManager.h"
 #include "Client.h"
 #include "Table.h"
+#include "HelperFunctions.h"
 #include <boost/date_time/local_time/local_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
 //--------------------------------------------------------------------------------------------------
@@ -12,14 +13,6 @@ using namespace boost::gregorian;
 using namespace boost::local_time;
 using namespace boost::posix_time;
 //--------------------------------------------------------------------------------------------------
-template <typename T>
-bool compareVectors(std::vector<T> const &vector1, std::vector<T> const &vector2)
-{
-    if(vector1.size() < vector2.size())
-        return std::equal(vector1.begin(), vector1.end(), vector2.begin());
-    else
-        return std::equal(vector2.begin(), vector2.end(), vector1.begin());
-}
 std::tuple<Restaurant::Client_Ptr, std::vector<Restaurant::Table_Ptr>, Restaurant::DateTime_Ptr, Restaurant::DateTime_Ptr> getReservationParameters2() //TODO: Can we use getReservationParameters() from ReservationTest??
 {
     return	{	std::make_shared<Restaurant::Client>(

@@ -1,12 +1,7 @@
 #include <boost/test/unit_test.hpp>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include "Repository.h"
-//--------------------------------------------------------------------------------------------------
-template <typename T>
-bool compareVectors(std::vector<T> const &container1, std::vector<T> const &container2)
-{
-	return std::equal(container1.begin(), container1.begin(), container2.begin());
-}
+#include "HelperFunctions.h"
 //--------------------------------------------------------------------------------------------------
 BOOST_AUTO_TEST_SUITE(Repository_CoreFunctionality_TestSuite)
 	BOOST_AUTO_TEST_CASE(Repository_ConstructFromVectorAndGetAllElements_TestCase)
