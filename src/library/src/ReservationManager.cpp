@@ -3,6 +3,8 @@
 
 #include "ReservationManager.h"
 #include "Reservation.h"
+#include "Table.h"
+#include "Client.h"
 #include "RestaurantException.h"
 #include <sstream>
 #include <boost/date_time/local_time/local_time.hpp>
@@ -81,7 +83,25 @@ std::vector<Restaurant::Reservation_Ptr> Restaurant::ReservationManager::getAllR
 //--------------------------------------------------------------------------------------------------
 std::string Restaurant::ReservationManager::getInfo() const
 {
-    return std::__cxx11::string();
+    std::stringstream info;
+    std::vector<Restaurant::Reservation_Ptr> reservations = getAllReservations();
+
+    info << "Overall number of reservations: " << reservations.size() << "\n";
+
+    for(auto const &reservation : reservations)
+    {
+        info << "> "
+             << reservation->getClient()->getFirstName()    << " "
+             << reservation->getClient()->getLastName()     << " "
+             << " Tables: ";
+        for(auto const &table : reservation->getTables())
+        {
+            info << table->getSeatCount() << " ";
+        }
+        info << reservation->getBeginTime()->date() << " "
+             << reservation->getEndTime()->date() << "\n";
+    }
+    return info.str();
 }
 
 const Restaurant::Client_Ptr
@@ -111,7 +131,7 @@ Restaurant::ReservationManager::checkBeginTime(const Restaurant::DateTime_Ptr &b
 const Restaurant::DateTime_Ptr &
 Restaurant::ReservationManager::checkEndTime(const Restaurant::DateTime_Ptr &endTime) const {
     if(endTime == nullptr)
-        throw Restaurant::RestaurantException("EndTime_Ptr can not be a nullptr!");
+        throw Restaurant::RestaurantException("EndTime_`Ptr can not be a nullptr!");
     return endTime;
 }
 
