@@ -44,6 +44,13 @@ namespace Restaurant
 		std::string getInfo() const;
 
 	private:
+		//------------------------------------------------------------------------ Parameter check <
+		Client_Ptr const &checkClient(Client_Ptr const &client) const;
+		Table_Ptr const &checkTable(Table_Ptr const &table) const;
+		std::vector<Table_Ptr> const &checkTables(std::vector<Table_Ptr> const &table) const;
+		DateTime_Ptr const &checkBeginTime(DateTime_Ptr const &beginTime) const;
+		DateTime_Ptr const &checkEndTime(DateTime_Ptr const &endTime) const;
+	private:
 		ReservationRepository reservationRepository;
 	};
 
