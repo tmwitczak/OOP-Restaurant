@@ -8,6 +8,9 @@
 #include "HelperFunctions.h"
 #include <boost/date_time/local_time/local_time.hpp>
 #include <boost/date_time/gregorian/gregorian.hpp>
+#include "RestaurantException.h"
+#include <iostream>
+
 //--------------------------------------------------------------------------------------------------
 using namespace boost::gregorian;
 using namespace boost::local_time;
@@ -70,6 +73,21 @@ BOOST_AUTO_TEST_SUITE(ReservationManager_CoreFunctionality_TestSuite)
         std::vector<Restaurant::Reservation_Ptr> allReservations = reservationManager.getAllReservations();
 
         BOOST_REQUIRE_EQUAL(compareVectors({ reservation2 }, allReservations), true);
+    }
+    BOOST_AUTO_TEST_CASE(ReservationManager_MakeReservationWithWrongDate_TestCase)
+    {
+        Restaurant::ReservationManager reservationManager;
+        auto const [client1, tables, beginTime, endTime] =  getReservationParameters2();
+        std::string message;
+        try
+        {
+            Restaurant::Reservation_Ptr reservation1 = reservationManager.makeReservation(client1, tables, endTime, beginTime);
+        }
+        catch(Restaurant::RestaurantException const &exception)
+        {
+            message = exception.getMessage();
+        }
+        BOOST_REQUIRE_EQUAL(message,"EndTime can not be before BeginTime!");
     }
 BOOST_AUTO_TEST_SUITE_END()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
