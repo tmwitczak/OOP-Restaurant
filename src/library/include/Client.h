@@ -2,7 +2,15 @@
 #define RESTAURANT_CLIENT_H
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <string>
+#include <memory>
 #include "ClientType.h"
+
+namespace Restaurant
+{
+	class ClientType;
+
+	typedef std::shared_ptr<ClientType> ClientType_Ptr;
+}
 //--------------------------------------------------------------------------------------------------
 namespace Restaurant
 {
@@ -23,9 +31,9 @@ namespace Restaurant
 		std::string const firstName,
 						  lastName,
 						  telephoneNumber;
-		ClientType const * const clientType;
+		ClientType_Ptr const clientType;
 
-		ClientType *makeClientType(std::string const &clientTypeString) const;
+		ClientType_Ptr makeClientType(std::string const &clientTypeString) const;
 	};
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

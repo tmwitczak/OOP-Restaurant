@@ -13,8 +13,6 @@ Restaurant::Client::Client(std::string const &firstName, std::string const &last
 //--------------------------------------------------------------------------------------------------
 Restaurant::Client::~Client()
 {
-	if(clientType)
-		delete clientType;
 }
 //--------------------------------------------------------------------------------------------------
 std::string Restaurant::Client::getFirstName() const
@@ -42,17 +40,17 @@ int Restaurant::Client::getMaximumTableCount() const
 	return clientType->getMaximumTableCount();
 }
 //--------------------------------------------------------------------------------------------------
-Restaurant::ClientType *Restaurant::Client::makeClientType(
+Restaurant::ClientType_Ptr Restaurant::Client::makeClientType(
 		std::string const &clientTypeString) const
 {
 	if(clientTypeString == "basic")
-		return new Basic;
+		return std::make_shared<Restaurant::Basic>();
 	else if(clientTypeString == "premium")
-		return new Premium;
+		return std::make_shared<Restaurant::Premium>();
 	/* TODO: Exceptions
 	 * else
 		throw;*/
 	else
-		return nullptr; // TODO: Exceptions
+		return std::make_shared<Restaurant::Premium>(); // TODO: Exceptions
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
