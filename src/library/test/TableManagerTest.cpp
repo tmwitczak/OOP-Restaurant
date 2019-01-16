@@ -1,8 +1,11 @@
 #include <boost/test/unit_test.hpp>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #include <vector>
+#include <string>
+#include <RestaurantException.h>
 #include "Table.h"
 #include "TableManager.h"
+#include <iostream>
 
 template <typename T>
 bool compareVectors(std::vector<T> const &vector1, std::vector<T> const &vector2)
@@ -65,5 +68,22 @@ BOOST_AUTO_TEST_SUITE(TableManager_CoreFunctionality_TestSuite)
         std::vector<Restaurant::Table_Ptr> allTables = tableManager.getAllTables();
 
         BOOST_REQUIRE_EQUAL( compareVectors({ table2 }, allTables), true);
+    }
+    BOOST_AUTO_TEST_CASE(TableManager_MakeTableTableWithNegativeSeatCount_TestCase)
+    {
+        Restaurant::TableManager tableManager;
+        std::string message;
+
+        int seatCount = -5;
+
+        try
+        {
+            Restaurant::Table_Ptr table1 = tableManager.makeTable(seatCount);
+        }
+        catch(Restaurant::RestaurantException const &exception)
+        {
+            message = exception.getMessage();
+        }
+        BOOST_REQUIRE_EQUAL(message, "Seat count must be positive integer!");
     }
 BOOST_AUTO_TEST_SUITE_END()

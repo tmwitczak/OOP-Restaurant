@@ -8,7 +8,7 @@ namespace Restaurant
 	/////////////////////////////////////////////////////////////////////////// Forward declarations
 	class Table;
 
-	/////////////////////////////////////////////////////////////////////////////// Class definition
+    /////////////////////////////////////////////////////////////////////////////// Class definition
 
 	typedef std::shared_ptr<Table> Table_Ptr;
 
@@ -33,6 +33,9 @@ namespace Restaurant
 		std::vector<Table_Ptr> getAllTables() const;
 		std::string getInfo() const;
 
+    private:
+        //------------------------------------------------------------------------ Parameter check <
+        int const &checkseatCount(int const &seatCount) const;
 	//------------------------------------------------------------------------------------- [ Fields ]
 	private:
 		TableRepository tableRepository;
@@ -40,3 +43,4 @@ namespace Restaurant
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 #endif /* RESTAURANT_TABLEMANAGER_H */
+
