@@ -79,7 +79,7 @@ void Restaurant::ReservationManager::cancelReservation(Restaurant::Reservation_P
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ReservationManager::cancelReservation(boost::uuids::uuid ID)
 {
-    //reservationRepository.remove(findReservationByID(ID));
+    reservationRepository.remove(findReservationByID(ID).at(0));
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Reservation_Ptr>
