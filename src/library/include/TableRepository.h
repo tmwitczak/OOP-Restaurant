@@ -18,6 +18,9 @@ namespace Restaurant
 	{
 	public:
 		std::vector<Table_Ptr> findTableBySeatCount(int seatCount) const;
+
+		void saveToFile(std::string const &filename) const override;
+		void readFromFile(std::string const &filename) override;
 	};
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////

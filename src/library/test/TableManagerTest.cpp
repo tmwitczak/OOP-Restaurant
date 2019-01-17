@@ -78,4 +78,23 @@ BOOST_AUTO_TEST_SUITE(TableManager_CoreFunctionality_TestSuite)
         }
         BOOST_REQUIRE_EQUAL(message, "Seat count must be positive integer!");
     }
+    BOOST_AUTO_TEST_CASE(TableManager_SaveTablesToFile_TestCase)
+    {
+        Restaurant::TableManager tableManager;
+
+        int seatCount = 5;
+        Restaurant::Table_Ptr table1 = tableManager.makeTable(seatCount);
+        seatCount = 3;
+        Restaurant::Table_Ptr table2 = tableManager.makeTable(seatCount);
+
+        tableManager.saveTablesToFile("TableMangerTest.tmp");
+
+        std::ifstream file;
+        file.open("TableMangerTest.tmp");
+        std::string fileContent((std::istreambuf_iterator<char>(file)),
+                                std::istreambuf_iterator<char>());
+        file.close();
+
+        BOOST_REQUIRE_EQUAL( fileContent, "5 3 ");
+    }
 BOOST_AUTO_TEST_SUITE_END()

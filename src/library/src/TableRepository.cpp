@@ -15,3 +15,28 @@ std::vector<Restaurant::Table_Ptr> Restaurant::TableRepository::findTableBySeatC
 
     return tables;
 }
+
+void Restaurant::TableRepository::saveToFile(std::string const &filename) const {
+    std::ofstream file;
+    file.open(filename);
+
+    for(auto const &table : getAll())
+        file << table->getSeatCount() << " ";
+
+    file.close();
+}
+
+void Restaurant::TableRepository::readFromFile(std::string const &filename) {
+    std::ifstream file;
+    file.open(filename);
+    while(file.good())
+    {
+        int seatCount;
+        file >> seatCount;
+        file.get();
+
+        if(file.good())
+            add(std::make_shared<Restaurant::Table>(seatCount));
+    }
+    file.close();
+}
