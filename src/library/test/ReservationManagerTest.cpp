@@ -94,5 +94,26 @@ BOOST_AUTO_TEST_SUITE(ReservationManager_CoreFunctionality_TestSuite)
         }
         BOOST_REQUIRE_EQUAL(message, "EndTime can not be before BeginTime!");
     }
+    BOOST_AUTO_TEST_CASE(ReservationManager_MakeReservationDuringAnotherOne_TestCase)
+    {
+        Restaurant::ReservationManager reservationManager;
+        auto const [client1, tables, beginTime, endTime] =  getReservationParameters2();
+        std::string message;
+        try
+        {
+            Restaurant::Reservation_Ptr reservation1 = reservationManager.makeReservation(client1, tables, beginTime, endTime),
+                    reservation2 = reservationManager.makeReservation( std::make_shared<Restaurant::Client>(Restaurant::Client("Jane", "Smith",
+                                                                                                                               "123456789", "premium")),
+                                                                       tables, beginTime, endTime);
+
+
+        }
+        catch(Restaurant::RestaurantException const &exception)
+        {
+            message = exception.getMessage();
+        }
+
+        BOOST_REQUIRE_EQUAL(message, "This table is unavailable at this time!");
+    }
 BOOST_AUTO_TEST_SUITE_END()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
