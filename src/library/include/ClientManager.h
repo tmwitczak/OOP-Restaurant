@@ -2,7 +2,6 @@
 #define RESTAURANT_CLIENTMANAGER_H
 /////////////////////////////////////////////////////////////////////////////////// Included headers
 #include "ClientRepository.h"
-#include <boost/date_time/local_time/local_date_time.hpp>
 
 namespace Restaurant
 {
@@ -18,30 +17,30 @@ namespace Restaurant
 	//---------------------------------------------------------------------------------- [ Methods ]
 	public:
 		//------------------------------------------------------------ Client creation and removal <
-		Client_Ptr makeClient(std::string const &firstName, std::string const &lastName,
-							  std::string const &telephoneNumber, std::string const &clientType);
-		void removeClient(Client_Ptr const &client);
+		Client_Ptr 	makeClient(std::string const &firstName, std::string const &lastName,
+							   std::string const &telephoneNumber, std::string const &clientType);
+		void 		removeClient(Client_Ptr const &client);
 
 		//------------------------------------------------------------------------- Search methods <
-		std::vector<Client_Ptr> findClientsByFirstName(std::string const &firstName) const;
-		std::vector<Client_Ptr> findClientsByLastName(std::string const &lastName) const;
+		std::vector<Client_Ptr> findClientsByFirstName(std::string const &firstName) 	const;
+		std::vector<Client_Ptr> findClientsByLastName(std::string const &lastName) 		const;
 		std::vector<Client_Ptr> findClientsByTelephoneNumber(
-				std::string const &telephoneNumber) const;
+												std::string const &telephoneNumber) 	const;
 
 		//------------------------------------------------------------------------ File operations <
-		void saveClientsToFile(std::string const &filename) const;
+		void saveClientsToFile(std::string const &filename) 	const;
 		void readClientsFromFile(std::string const &filename);
 
 		//-------------------------------------------------------------------------------- Getters <
 		std::vector<Client_Ptr> getAllClients() const;
-		std::string getInfo() const;
+		std::string 			getInfo() 		const;
 
 	private:
 		//------------------------------------------------------------------------ Parameter check <
-		std::string const &checkFirstName(std::string const &firstName) const;
-		std::string const &checkLastName(std::string const &lastName) const;
+		std::string const &checkFirstName(std::string const &firstName) 			const;
+		std::string const &checkLastName(std::string const &lastName) 				const;
 		std::string const &checkTelephoneNumber(std::string const &telephoneNumber) const;
-		std::string const &checkClientType(std::string const &clientType) const;
+		std::string const &checkClientType(std::string const &clientType) 			const;
 
 	//----------------------------------------------------------------------------------- [ Fields ]
 	private:

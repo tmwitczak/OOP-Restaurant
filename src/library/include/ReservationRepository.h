@@ -11,9 +11,10 @@ namespace Restaurant
 	class Client;
 	class Table;
 
-	typedef std::shared_ptr<Reservation> Reservation_Ptr;
-	typedef std::shared_ptr<Client> Client_Ptr;
-	typedef std::shared_ptr<Table> Table_Ptr;
+	typedef std::shared_ptr<Reservation> 	Reservation_Ptr;
+	typedef std::shared_ptr<Client> 		Client_Ptr;
+	typedef std::shared_ptr<Table> 			Table_Ptr;
+	typedef boost::uuids::uuid 				UUID;
 }
 
 namespace Restaurant
@@ -22,9 +23,13 @@ namespace Restaurant
 			: public  Repository<Reservation_Ptr>
 	{
 	public:
-		Reservation_Ptr 				findReservationByID(boost::uuids::uuid id);
-		std::vector<Reservation_Ptr> 	findReservationByClient(Client_Ptr client);
-		std::vector<Reservation_Ptr> 	findReservationByTable(Table_Ptr table);
+		std::vector<Reservation_Ptr> 	findReservationByID(UUID const &id) const;
+		std::vector<Reservation_Ptr> 	findReservationsByClient(Client_Ptr const &client) const;
+		std::vector<Reservation_Ptr> 	findReservationsByTable(Table_Ptr const &table) const;
+
+	private:
+		template <typename Value>
+		std::vector<Reservation_Ptr> findReservationsByValue(Value const &value) const;
 
 	};
 }

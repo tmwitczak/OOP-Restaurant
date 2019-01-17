@@ -4,8 +4,7 @@
 #include "ClientManager.h"
 #include "RestaurantException.h"
 #include "HelperFunctions.h"
-#include <string>
-#include <vector>
+#include <fstream>
 //--------------------------------------------------------------------------------------------------
 bool operator==(Restaurant::Client const &client1,
 				Restaurant::Client const &client2)
@@ -13,8 +12,7 @@ bool operator==(Restaurant::Client const &client1,
 	return ( 	client1.getFirstName() 			== client2.getFirstName()
 		 	&& 	client1.getLastName() 			== client2.getLastName()
 			&& 	client1.getTelephoneNumber() 	== client2.getTelephoneNumber()
-			&& 	client1.getDiscountPercentage() == client2.getDiscountPercentage()
-			&& 	client1.getMaximumTableCount() 	== client2.getMaximumTableCount());
+			&& 	client1.getClientType() 		== client2.getClientType());
 }
 //--------------------------------------------------------------------------------------------------
 BOOST_AUTO_TEST_SUITE(ClientManager_CoreFunctionality_TestSuite)
@@ -51,6 +49,120 @@ BOOST_AUTO_TEST_SUITE(ClientManager_CoreFunctionality_TestSuite)
 		std::vector<Restaurant::Client_Ptr> allClients = clientManager.getAllClients();
 
 		BOOST_REQUIRE_EQUAL(compareVectors({ client2 }, allClients), true);
+	}
+	BOOST_AUTO_TEST_CASE(ClientManager_FindClientsByFirstName_TestCase)
+	{
+		Restaurant::ClientManager clientManager;
+		clientManager.makeClient("Jon", "Snow", "111111111", "basic");
+		clientManager.makeClient("Aegon", "Snow", "222222222", "basic");
+		clientManager.makeClient("Jon", "Targaryen", "333333333", "basic");
+		clientManager.makeClient("Ned", "Stark", "444444444", "basic");
+		clientManager.makeClient("Arya", "Stark", "555555555", "basic");
+		std::vector<Restaurant::Client_Ptr> const clientsExpectedResult
+		{
+			clientManager.getAllClients().at(0),
+			clientManager.getAllClients().at(2)
+		};
+
+		std::vector<Restaurant::Client_Ptr> clientsActualResult =
+				clientManager.findClientsByFirstName("Jon");
+
+		BOOST_REQUIRE_EQUAL(compareVectors(clientsExpectedResult, clientsActualResult), true);
+	}
+	BOOST_AUTO_TEST_CASE(ClientManager_FindClientsByLastName_TestCase)
+	{
+		Restaurant::ClientManager clientManager;
+		clientManager.makeClient("Jon", "Snow", "111111111", "basic");
+		clientManager.makeClient("Aegon", "Snow", "222222222", "basic");
+		clientManager.makeClient("Jon", "Targaryen", "333333333", "basic");
+		clientManager.makeClient("Ned", "Stark", "444444444", "basic");
+		clientManager.makeClient("Arya", "Stark", "555555555", "basic");
+		std::vector<Restaurant::Client_Ptr> const clientsExpectedResult
+		{
+			clientManager.getAllClients().at(2)
+		};
+
+		std::vector<Restaurant::Client_Ptr> const clientsActualResult =
+				clientManager.findClientsByLastName("Targaryen");
+
+		BOOST_REQUIRE_EQUAL(compareVectors(clientsExpectedResult, clientsActualResult), true);
+	}
+	BOOST_AUTO_TEST_CASE(ClientManager_FindClientsByTelephoneNumber_TestCase)
+	{
+		Restaurant::ClientManager clientManager;
+		clientManager.makeClient("Jon", "Snow", "111111111", "basic");
+		clientManager.makeClient("Aegon", "Snow", "222222222", "basic");
+		clientManager.makeClient("Jon", "Targaryen", "333333333", "basic");
+		clientManager.makeClient("Ned", "Stark", "444444444", "basic");
+		clientManager.makeClient("Arya", "Stark", "555555555", "basic");
+		std::vector<Restaurant::Client_Ptr> const clientsExpectedResult
+		{
+			clientManager.getAllClients().at(3)
+		};
+
+		std::vector<Restaurant::Client_Ptr> const clientsActualResult =
+				clientManager.findClientsByTelephoneNumber("444444444");
+
+		BOOST_REQUIRE_EQUAL(compareVectors(clientsExpectedResult, clientsActualResult), true);
+	}
+	BOOST_AUTO_TEST_CASE(ClientManager_SaveClientsToFile_TestCase)
+	{
+		Restaurant::ClientManager clientManager;
+		clientManager.makeClient("Jon", "Snow", "111111111", "basic");
+		clientManager.makeClient("Aegon", "Snow", "222222222", "basic");
+		clientManager.makeClient("Jon", "Targaryen", "333333333", "basic");
+		clientManager.makeClient("Ned", "Stark", "444444444", "basic");
+		clientManager.makeClient("Arya", "Stark", "555555555", "basic");
+
+		clientManager.saveClientsToFile("ClientManagerTest.tmp");
+
+		std::ifstream file;
+		file.open("ClientManagerTest.tmp");
+		std::string fileContent((std::istreambuf_iterator<char>(file)),
+								 std::istreambuf_iterator<char>());
+		file.close();
+		BOOST_REQUIRE_EQUAL(fileContent,
+				"Jon\nSnow\n111111111\nbasic\n\n"
+				"Aegon\nSnow\n222222222\nbasic\n\n"
+				"Jon\nTargaryen\n333333333\nbasic\n\n"
+				"Ned\nStark\n444444444\nbasic\n\n"
+				"Arya\nStark\n555555555\nbasic\n\n");
+	}
+	BOOST_AUTO_TEST_CASE(ClientManager_ReadClientsFromFile_TestCase)
+	{
+		Restaurant::ClientManager clientManager1, clientManager2;
+		clientManager1.makeClient("Jon", "Snow", "111111111", "basic");
+		clientManager1.makeClient("Aegon", "Snow", "222222222", "basic");
+		clientManager1.makeClient("Jon", "Targaryen", "333333333", "basic");
+		clientManager1.makeClient("Ned", "Stark", "444444444", "basic");
+		clientManager1.makeClient("Arya", "Stark", "555555555", "basic");
+
+		std::ofstream file;
+		file.open("ClientManagerTest.tmp");
+		file << "Jon\nSnow\n111111111\nbasic\n\n"
+				"Aegon\nSnow\n222222222\nbasic\n\n"
+				"Jon\nTargaryen\n333333333\nbasic\n\n"
+				"Ned\nStark\n444444444\nbasic\n\n"
+				"Arya\nStark\n555555555\nbasic\n\n";
+		file.close();
+
+		clientManager2.readClientsFromFile("ClientManagerTest.tmp");
+
+		std::vector<Restaurant::Client_Ptr> clients1 = clientManager1.getAllClients(),
+											clients2 = clientManager2.getAllClients();
+
+		bool areEqual = true;
+
+		for(auto i = clients1.begin(), j = clients2.begin();
+			i != clients1.end() && j != clients2.end();
+			i++, j++)
+			if(!operator==(**i, **j))
+			{
+				areEqual = false;
+				break;
+			}
+
+		BOOST_REQUIRE_EQUAL(areEqual, true);
 	}
 BOOST_AUTO_TEST_SUITE_END()
 

@@ -26,7 +26,12 @@ namespace Restaurant
 		std::vector<Client_Ptr> findClientsByTelephoneNumber(
 				std::string const &telephoneNumber) const;
 
+		//------------------------------------------------------------------------ File operations <
+		void saveToFile(std::string const &filename) const override;
+		void readFromFile(std::string const &filename) override;
+
 	private:
+		//----------------------------------------------------------------------- Helper functions <
 		std::vector<Client_Ptr> findClientsByValue(std::string const &value,
 				std::string const &type) const;
 	};

@@ -1,5 +1,10 @@
 #include "Premium.h"
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+Restaurant::Premium::Premium()
+	:	ClientType("premium")
+{
+}
+//--------------------------------------------------------------------------------------------------
 double Restaurant::Premium::getDiscountPercentage() const
 {
 	return 2.5;

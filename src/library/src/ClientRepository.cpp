@@ -1,6 +1,7 @@
 #include "Client.h"
 #include "ClientRepository.h"
 #include <algorithm>
+#include <fstream>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 std::vector<Restaurant::Client_Ptr>
 Restaurant::ClientRepository::findClientsByFirstName(std::string const &firstName) const
@@ -18,6 +19,41 @@ std::vector<Restaurant::Client_Ptr>
 Restaurant::ClientRepository::findClientsByTelephoneNumber(std::string const &telephoneNumber) const
 {
 	return findClientsByValue(telephoneNumber, "telephoneNumber");
+}
+//--------------------------------------------------------------------------------------------------
+void Restaurant::ClientRepository::saveToFile(std::string const &filename) const
+{
+	std::ofstream file;
+	file.open(filename);
+
+	for(auto const &client : getAll())
+		file << client->getFirstName() << "\n"
+			 << client->getLastName() << "\n"
+			 << client->getTelephoneNumber() << "\n"
+			 << client->getClientType() << "\n\n";
+
+	file.close();
+}
+void Restaurant::ClientRepository::readFromFile(std::string const &filename)
+{
+	std::ifstream file;
+	file.open(filename);
+	while(file.good())
+	{
+		std::string firstName, lastName, telephoneNumber, clientType;
+		file >> firstName;
+		file.get();
+		file >> lastName;
+		file.get();
+		file >> telephoneNumber;
+		file.get();
+		file >> clientType;
+
+		if(file.good())
+			add(std::make_shared<Restaurant::Client>(firstName, lastName,
+					telephoneNumber, clientType));
+	}
+	file.close();
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Client_Ptr>

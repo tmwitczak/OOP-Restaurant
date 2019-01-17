@@ -36,6 +36,11 @@ int Restaurant::Client::getMaximumTableCount() const
 	return clientType->getMaximumTableCount();
 }
 //--------------------------------------------------------------------------------------------------
+std::string Restaurant::Client::getClientType() const
+{
+	return clientType->getClientType();
+}
+//--------------------------------------------------------------------------------------------------
 Restaurant::ClientType_Ptr Restaurant::Client::makeClientType(
 		std::string const &clientTypeString) const
 {

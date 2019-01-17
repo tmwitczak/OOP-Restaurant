@@ -28,6 +28,7 @@ namespace Restaurant
 		std::string 	getTelephoneNumber() 	const;
 		double 			getDiscountPercentage() const;
 		int 			getMaximumTableCount() 	const;
+		std::string 	getClientType() 		const;
 
 	private:
 		//-------------------------------------------------------- Construct ClientType delegation <

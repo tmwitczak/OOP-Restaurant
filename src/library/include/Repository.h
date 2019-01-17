@@ -19,10 +19,10 @@ namespace Restaurant
 		Repository &operator=(Repository &&) = delete;
 		virtual ~Repository() = default;
 
-		bool add(T const &element);
+		void add(T const &element);
 		void remove(T const &element);
-		void saveToFile(std::string const &filename) const;
-		void readFromFile(std::string const &filename);
+		virtual void saveToFile(std::string const &filename) const;
+		virtual void readFromFile(std::string const &filename);
 		std::vector<T> const &getAll() const;
 
 	protected:
@@ -37,12 +37,9 @@ Restaurant::Repository<T>::Repository(std::vector<T> const &elements)
 }
 //--------------------------------------------------------------------------------------------------
 template <typename T>
-bool Restaurant::Repository<T>::add(T const &element)
+void Restaurant::Repository<T>::add(T const &element)
 {
 	elements.push_back(element);
-
-	// TODO: Is returning bool in this case even necessary? Also should we do try,catch here?
-	return true;
 }
 //--------------------------------------------------------------------------------------------------
 template <typename T>

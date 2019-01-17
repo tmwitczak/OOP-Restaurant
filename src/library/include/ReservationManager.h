@@ -30,10 +30,9 @@ namespace Restaurant
 		void cancelReservation(boost::uuids::uuid ID);
 
         //------------------------------------------------------------------------- Search methods <
-
-        Reservation_Ptr 				findReservationByID(boost::uuids::uuid id);
-		std::vector<Reservation_Ptr> 	findReservationByClient(Client_Ptr client);
-		std::vector<Reservation_Ptr> 	findReservationByTable(Table_Ptr table);
+		std::vector<Reservation_Ptr>	findReservationByID(boost::uuids::uuid id) const;
+		std::vector<Reservation_Ptr> 	findReservationsByClient(Client_Ptr client) const;
+		std::vector<Reservation_Ptr> 	findReservationsByTable(Table_Ptr table) const;
 
         //------------------------------------------------------------------------ File operations <
         void saveReservationsToFile(std::string const &filename) const;

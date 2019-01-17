@@ -2,6 +2,8 @@
 #include "Client.h"
 #include "RestaurantException.h"
 #include <sstream>
+#include <fstream>
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 Restaurant::Client_Ptr
 Restaurant::ClientManager::makeClient(std::string const &firstName, std::string const &lastName,
@@ -48,6 +50,31 @@ void Restaurant::ClientManager::saveClientsToFile(std::string const &filename) c
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ClientManager::readClientsFromFile(std::string const &filename)
 {
+	std::ifstream file;
+	file.open(filename);
+	while(file.good())
+	{
+		std::string firstName, lastName, telephoneNumber, clientType;
+		file >> firstName;
+		file.get();
+		file >> lastName;
+		file.get();
+		file >> telephoneNumber;
+		file.get();
+		file >> clientType;
+		file.get();
+		file.get();
+
+		if(file.good())
+		{
+			checkFirstName(firstName);
+			checkLastName(lastName);
+			checkTelephoneNumber(telephoneNumber);
+			checkClientType(clientType);
+		}
+	}
+	file.close();
+
 	clientRepository.readFromFile(filename);
 }
 //--------------------------------------------------------------------------------------------------

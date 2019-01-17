@@ -23,13 +23,13 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
     std::vector<Table_Ptr> tables;
     tables.push_back(table);
 
-    if( endTime > beginTime )
+    if( endTime < beginTime ) // TODO < or > ?
         throw  Restaurant::RestaurantException("EndTime can not be before BeginTime!");
 
 
     for(auto &table : tables)
     {
-        for(auto &reservation : reservationRepository.findReservationByTable(table))
+        for(auto &reservation : reservationRepository.findReservationsByTable(table))
         {
             if( ((reservation->getBeginTime() >= beginTime) && (reservation->getBeginTime() <= endTime))
                 ||((reservation->getEndTime()   >= beginTime) && (reservation->getEndTime()   <= endTime)))
@@ -52,13 +52,13 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
     Restaurant::Reservation_Ptr reservation = std::make_shared<Restaurant::Reservation>(checkClient(client),
                                                                                         checkTables(tables),
                                                                                         checkBeginTime(beginTime), checkEndTime(endTime));
-    if( endTime > beginTime )
+    if( endTime < beginTime )
         throw  Restaurant::RestaurantException("EndTime can not be before BeginTime!");
 
 
     for(auto &table : tables)
     {
-        for(auto &reservation : reservationRepository.findReservationByTable(table))
+        for(auto &reservation : reservationRepository.findReservationsByTable(table))
         {
             if( ((reservation->getBeginTime() >= beginTime) && (reservation->getBeginTime() <= endTime))
                 ||((reservation->getEndTime()   >= beginTime) && (reservation->getEndTime()   <= endTime)))
@@ -77,25 +77,25 @@ void Restaurant::ReservationManager::cancelReservation(Restaurant::Reservation_P
     reservationRepository.remove(reservation);
 }
 //--------------------------------------------------------------------------------------------------
-/*
 void Restaurant::ReservationManager::cancelReservation(boost::uuids::uuid ID)
 {
-    reservationRepository.remove( findReservationByID(ID) );
-}*/
-//--------------------------------------------------------------------------------------------------
-Restaurant::Reservation_Ptr Restaurant::ReservationManager::findReservationByID(boost::uuids::uuid id)
-{
-    return Restaurant::Reservation_Ptr();
+    //reservationRepository.remove(findReservationByID(ID));
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Reservation_Ptr>
-Restaurant::ReservationManager::findReservationByClient(Restaurant::Client_Ptr client)
+Restaurant::ReservationManager::findReservationByID(boost::uuids::uuid id) const
+{
+    return reservationRepository.findReservationByID(id);
+}
+//--------------------------------------------------------------------------------------------------
+std::vector<Restaurant::Reservation_Ptr>
+Restaurant::ReservationManager::findReservationsByClient(Restaurant::Client_Ptr client) const
 {
     return std::vector<Restaurant::Reservation_Ptr>();
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Reservation_Ptr>
-Restaurant::ReservationManager::findReservationByTable(Restaurant::Table_Ptr table)
+Restaurant::ReservationManager::findReservationsByTable(Restaurant::Table_Ptr table) const
 {
     return std::vector<Restaurant::Reservation_Ptr>();
 }

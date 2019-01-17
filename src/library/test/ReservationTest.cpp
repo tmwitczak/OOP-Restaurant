@@ -4,24 +4,6 @@
 #include "Client.h"
 #include "Table.h"
 #include "HelperFunctions.h"
-#include <boost/date_time/local_time/local_time.hpp>
-#include <boost/date_time/gregorian/gregorian.hpp>
-//--------------------------------------------------------------------------------------------------
-using namespace boost::gregorian;
-using namespace boost::local_time;
-using namespace boost::posix_time;
-//--------------------------------------------------------------------------------------------------
-std::tuple<Restaurant::Client_Ptr, std::vector<Restaurant::Table_Ptr>, Restaurant::DateTime_Ptr, Restaurant::DateTime_Ptr> getReservationParameters()
-{
-	return	{	std::make_shared<Restaurant::Client>(
-						Restaurant::Client("John", "Smith", "123456789", "basic")),
-		  		{ std::make_shared<Restaurant::Table>(Restaurant::Table(2)) },
-		  		{ std::make_shared<local_date_time>(
-						local_date_time( ptime(date(2019, 01, 07), hours(18)), time_zone_ptr (new posix_time_zone("CET+01"))) )} ,
-				{ std::make_shared<local_date_time>(
-						local_date_time( ptime(date(2019, 01, 07), hours(20)), time_zone_ptr (new posix_time_zone("CET+01"))) )}
-			};
-}
 //--------------------------------------------------------------------------------------------------
 BOOST_AUTO_TEST_SUITE(Reservation_CoreFunctionality_TestSuite)
 	BOOST_AUTO_TEST_CASE(Reservation_ConstructAndGetClient_TestCase)
@@ -44,7 +26,16 @@ BOOST_AUTO_TEST_SUITE(Reservation_CoreFunctionality_TestSuite)
 	}
 	BOOST_AUTO_TEST_CASE(Reservation_ConstructAndGetID_TestCase)
 	{
-		// TODO: Is this test really needed?
+		auto const [client, tables, beginTime, endTime] = getReservationParameters();
+
+		std::vector<Restaurant::Reservation> reservations;
+		for(int i = 0; i < 10; i++)
+			reservations.push_back(Restaurant::Reservation(client, tables, beginTime, endTime));
+
+		for(auto i = reservations.begin(); i != reservations.end(); i++)
+			for(auto j = reservations.begin(); j != reservations.end(); j++)
+				if(i != j)
+					BOOST_REQUIRE_EQUAL(i->getID() != j->getID(), true);
 	}
 	BOOST_AUTO_TEST_CASE(Reservation_ConstructAndGetBeginTime_TestCase)
 	{
@@ -64,6 +55,5 @@ BOOST_AUTO_TEST_SUITE(Reservation_CoreFunctionality_TestSuite)
 
 		BOOST_REQUIRE_EQUAL(endTime1, endTime2);
 	}
-	// TODO: Write tests for exceptions in constructor
 BOOST_AUTO_TEST_SUITE_END()
 ////////////////////////////////////////////////////////////////////////////////////////////////////
