@@ -16,12 +16,12 @@ namespace Restaurant
 	{
 	//---------------------------------------------------------------------------------- [ Methods ]
 	public:
-		Table_Ptr makeTable(int &seatCount);
-		std::vector<Table_Ptr> makeTables(int &tableCount, int &seatCount);
+		Table_Ptr makeTable(int const &seatCount);
+		std::vector<Table_Ptr> makeTables(int const &tableCount, int const &seatCount);
 		void removeTable(Table_Ptr const &table);
 
 		//------------------------------------------------------------------------- Search methods <
-		std::vector<Table_Ptr> findTableBySeatCount(int &seatCount);
+		std::vector<Table_Ptr> findTableBySeatCount(int const &seatCount);
 
 		//------------------------------------------------------------------------ File operations <
 		void saveTablesToFile(std::string const &filename) const;

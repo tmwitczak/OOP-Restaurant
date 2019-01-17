@@ -4,7 +4,7 @@
 #include <sstream>
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 Restaurant::Table_Ptr
-Restaurant::TableManager::makeTable(int &seatCount)
+Restaurant::TableManager::makeTable(int const &seatCount)
 {
     Restaurant::Table_Ptr table = std::make_shared<Restaurant::Table>(
             checkseatCount(seatCount));
@@ -14,7 +14,7 @@ Restaurant::TableManager::makeTable(int &seatCount)
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Table_Ptr>
-Restaurant::TableManager::makeTables(int &tableCount, int &seatCount)
+Restaurant::TableManager::makeTables(int const &tableCount, int const &seatCount)
 {
     std::vector<Restaurant::Table_Ptr> tables;
     Restaurant::Table_Ptr table = nullptr;
@@ -33,7 +33,7 @@ void Restaurant::TableManager::removeTable(Restaurant::Table_Ptr const &table)
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Table_Ptr>
-Restaurant::TableManager::findTableBySeatCount(int &seatCount)
+Restaurant::TableManager::findTableBySeatCount(int const &seatCount)
 {
     return {};//tableRepository.findTableBySeatCount(seatCount);
 }

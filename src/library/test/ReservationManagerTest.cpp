@@ -3,6 +3,8 @@
 #include <vector>
 #include "Reservation.h"
 #include "ReservationManager.h"
+#include "TableManager.h"
+#include "ClientManager.h"
 #include "Client.h"
 #include "Table.h"
 #include "HelperFunctions.h"
@@ -115,5 +117,92 @@ BOOST_AUTO_TEST_SUITE(ReservationManager_CoreFunctionality_TestSuite)
 
         BOOST_REQUIRE_EQUAL(message, "This table is unavailable at this time!");
     }
+	BOOST_AUTO_TEST_CASE(ReservationManager_SaveClientsToFile_TestCase)
+	{
+		auto const [client, tables, beginTime, endTime] = getReservationParameters();
+
+		Restaurant::ClientManager clientManager;
+		clientManager.makeClient("Jon", "Snow", "111111111", "basic");
+		clientManager.makeClient("Aegon", "Snow", "222222222", "basic");
+		clientManager.makeClient("Jon", "Targaryen", "333333333", "basic");
+		clientManager.makeClient("Ned", "Stark", "444444444", "basic");
+		clientManager.makeClient("Arya", "Stark", "555555555", "basic");
+
+		Restaurant::TableManager tableManager;
+		tableManager.makeTable(1);
+		tableManager.makeTable(1);
+		tableManager.makeTable(1);
+		tableManager.makeTable(1);
+		tableManager.makeTable(1);
+
+		Restaurant::ReservationManager reservationManager;
+		for(int i = 0; i < 5; i++)
+			reservationManager.makeReservation(clientManager.getAllClients().at(i), tableManager.getAllTables().at(i), beginTime, endTime);
+
+		reservationManager.saveReservationsToFile("ReservationManagerTest.tmp");
+
+		std::ifstream file;
+		file.open("ReservationManagerTest.tmp");
+		std::string fileContent((std::istreambuf_iterator<char>(file)),
+								std::istreambuf_iterator<char>());
+		file.close();
+		BOOST_REQUIRE_EQUAL(fileContent,
+							"Jon\nSnow\n111111111\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n"
+							"Aegon\nSnow\n222222222\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n"
+							"Jon\nTargaryen\n333333333\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n"
+							"Ned\nStark\n444444444\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n"
+							"Arya\nStark\n555555555\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n");
+	}
+	BOOST_AUTO_TEST_CASE(ClientManager_ReadClientsFromFile_TestCase)
+	{
+		auto const [client, tables, beginTime, endTime] = getReservationParameters();
+
+		Restaurant::ClientManager clientManager;
+		clientManager.makeClient("Jon", "Snow", "111111111", "basic");
+		clientManager.makeClient("Aegon", "Snow", "222222222", "basic");
+		clientManager.makeClient("Jon", "Targaryen", "333333333", "basic");
+		clientManager.makeClient("Ned", "Stark", "444444444", "basic");
+		clientManager.makeClient("Arya", "Stark", "555555555", "basic");
+
+		Restaurant::TableManager tableManager;
+		tableManager.makeTable(1);
+		tableManager.makeTable(1);
+		tableManager.makeTable(1);
+		tableManager.makeTable(1);
+		tableManager.makeTable(1);
+
+		Restaurant::ReservationManager reservationManager, reservationManager2;
+		for(int i = 0; i < 5; i++)
+			reservationManager.makeReservation(clientManager.getAllClients().at(i), tableManager.getAllTables().at(i), beginTime, endTime);
+
+		reservationManager.saveReservationsToFile("ReservationManagerTest.tmp");
+
+		std::ofstream file;
+		file.open("ReservationManagerTest.tmp");
+		file << "Jon\nSnow\n111111111\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n"
+				"Aegon\nSnow\n222222222\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n"
+				"Jon\nTargaryen\n333333333\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n"
+				"Ned\nStark\n444444444\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n"
+				"Arya\nStark\n555555555\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n";
+		file.close();
+
+		reservationManager2.readReservationsFromFile("ReservationManagerTest.tmp");
+
+		std::vector<Restaurant::Reservation_Ptr> reservations1 = reservationManager.getAllReservations(),
+				reservations2 = reservationManager2.getAllReservations();
+
+		bool areEqual = true;
+
+		for(auto i = reservations1.begin(), j = reservations2.begin();
+			i != reservations1.end() && j != reservations2.end();
+			i++, j++)
+			if(!operator==(**i, **j))
+			{
+				areEqual = false;
+				break;
+			}
+
+		BOOST_REQUIRE_EQUAL(areEqual, true);
+	}
 BOOST_AUTO_TEST_SUITE_END()
 ////////////////////////////////////////////////////////////////////////////////////////////////////

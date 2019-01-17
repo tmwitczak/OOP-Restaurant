@@ -27,6 +27,9 @@ namespace Restaurant
 		std::vector<Reservation_Ptr> 	findReservationsByClient(Client_Ptr const &client) const;
 		std::vector<Reservation_Ptr> 	findReservationsByTable(Table_Ptr const &table) const;
 
+		void saveToFile(std::string const &filename) const override;
+		void readFromFile(std::string const &filename) override;
+
 	private:
 		template <typename Value>
 		std::vector<Reservation_Ptr> findReservationsByValue(Value const &value) const;

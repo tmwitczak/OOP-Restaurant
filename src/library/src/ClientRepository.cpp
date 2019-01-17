@@ -48,6 +48,7 @@ void Restaurant::ClientRepository::readFromFile(std::string const &filename)
 		file >> telephoneNumber;
 		file.get();
 		file >> clientType;
+		file.get();
 
 		if(file.good())
 			add(std::make_shared<Restaurant::Client>(firstName, lastName,

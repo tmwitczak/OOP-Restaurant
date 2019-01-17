@@ -91,54 +91,23 @@ Restaurant::ReservationManager::findReservationByID(boost::uuids::uuid id) const
 std::vector<Restaurant::Reservation_Ptr>
 Restaurant::ReservationManager::findReservationsByClient(Restaurant::Client_Ptr client) const
 {
-    return std::vector<Restaurant::Reservation_Ptr>();
+    return reservationRepository.findReservationsByClient(client);
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Reservation_Ptr>
 Restaurant::ReservationManager::findReservationsByTable(Restaurant::Table_Ptr table) const
 {
-    return std::vector<Restaurant::Reservation_Ptr>();
+    return reservationRepository.findReservationsByTable(table);
 }
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ReservationManager::saveReservationsToFile(std::string const &filename) const
 {
-    //reservationRepository.saveToFile(filename);
-    std::ofstream outFile(filename, std::ios::binary);
-    for(auto &reservation : this->getAllReservations())
-    {
-        outFile << this->getInfo() << "\n";
-        for(auto &table : reservation->getTables())
-        {
-            outFile << table->getSeatCount();
-        }
-        outFile << "\n" << reservation->getBeginTime() << reservation->getEndTime() << "\n\n";
-    }
+    reservationRepository.saveToFile(filename);
 }
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ReservationManager::readReservationsFromFile(std::string const &filename)
 {
-    //reservationRepository.readFromFile(filename);
-    std::ifstream file;
-    file.open(filename);
-    while(file.good())
-    {
-        std::string firstName, lastName, telephoneNumber, clientType;
-        file >> firstName;
-        file.get();
-        file >> lastName;
-        file.get();
-        file >> telephoneNumber;
-        file.get();
-        file >> clientType;
-        file.get();
-        file.get();
-
-        if(file.good())
-        {
-
-        }
-    }
-    file.close();
+    reservationRepository.readFromFile(filename);
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Reservation_Ptr> Restaurant::ReservationManager::getAllReservations() const
