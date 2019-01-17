@@ -45,9 +45,19 @@ Restaurant::ClientManager::findClientsByTelephoneNumber(std::string const &telep
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ClientManager::saveClientsToFile(std::string const &filename) const
 {
-	//clientRepository.saveToFile(filename);
+	/*//clientRepository.saveToFile(filename);
 	std::ofstream outFile(filename, std::ios::binary);
-	for(auto &client : this->getAllClients()) outFile << this->getInfo() << "\n";
+	for(auto &client : this->getAllClients()) outFile << this->getInfo() << "\n";*/
+	std::ofstream file;
+	file.open(filename);
+
+	for(auto const &client : clientRepository.getAll())
+		file << client->getFirstName() << "\n"
+			 << client->getLastName() << "\n"
+			 << client->getTelephoneNumber() << "\n"
+			 << client->getClientType() << "\n\n";
+
+	file.close();
 }
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ClientManager::readClientsFromFile(std::string const &filename)
