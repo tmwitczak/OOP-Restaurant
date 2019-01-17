@@ -14,6 +14,7 @@
 #include <iostream>
 #include <string>
 
+
 //--------------------------------------------------------------------------------------------------
 using namespace boost::gregorian;
 using namespace boost::local_time;
@@ -49,6 +50,8 @@ BOOST_AUTO_TEST_SUITE(ReservationManager_CoreFunctionality_TestSuite)
         Restaurant::ReservationManager reservationManager;
         auto const [client1, tables, beginTime, endTime] =  getReservationParameters2();
         Restaurant::Reservation reservation1(client1, tables, beginTime, endTime);
+        	//	std::make_shared<local_date_time>(local_date_time( ptime(date(2019, 01, 07), hours(18)), time_zone_ptr (new posix_time_zone("CET+01"))) ),
+        	//	std::make_shared<local_date_time>(local_date_time( ptime(date(2019, 01, 07), hours(19)), time_zone_ptr (new posix_time_zone("CET+01"))) ));
 
         Restaurant::Reservation_Ptr reservation2 = reservationManager.makeReservation(client1, tables, beginTime, endTime);
 
@@ -87,8 +90,8 @@ BOOST_AUTO_TEST_SUITE(ReservationManager_CoreFunctionality_TestSuite)
         try
         {
             Restaurant::Reservation_Ptr reservation1 = reservationManager.makeReservation(client1, tables,
-                    std::make_shared<local_date_time>(local_date_time( ptime(date(2019, 01, 07), hours(18)), time_zone_ptr (new posix_time_zone("CET+01"))) ),
-                    std::make_shared<local_date_time>(local_date_time( ptime(date(2018, 01, 07), hours(18)), time_zone_ptr (new posix_time_zone("CET+01"))) ));
+                    std::make_shared<local_date_time>(local_date_time( ptime(date(2019, 1, 7), hours(18)), time_zone_ptr (new posix_time_zone("CET+01"))) ),
+                    std::make_shared<local_date_time>(local_date_time( ptime(date(2018, 1, 8), hours(18)), time_zone_ptr (new posix_time_zone("CET+01"))) ));
         }
         catch(Restaurant::RestaurantException const &exception)
         {
@@ -117,7 +120,7 @@ BOOST_AUTO_TEST_SUITE(ReservationManager_CoreFunctionality_TestSuite)
 
         BOOST_REQUIRE_EQUAL(message, "This table is unavailable at this time!");
     }
-	BOOST_AUTO_TEST_CASE(ReservationManager_SaveClientsToFile_TestCase)
+	BOOST_AUTO_TEST_CASE(ReservationManager_SaveReservationToFile_TestCase)
 	{
 		auto const [client, tables, beginTime, endTime] = getReservationParameters();
 
@@ -153,7 +156,7 @@ BOOST_AUTO_TEST_SUITE(ReservationManager_CoreFunctionality_TestSuite)
 							"Ned\nStark\n444444444\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n"
 							"Arya\nStark\n555555555\nbasic\n1\n1\n2019-Jan-07 19:00:00 CET\n2019-Jan-07 21:00:00 CET\n\n");
 	}
-	BOOST_AUTO_TEST_CASE(ClientManager_ReadClientsFromFile_TestCase)
+	BOOST_AUTO_TEST_CASE(ReservationManager_ReadReservationsFromFile_TestCase)
 	{
 		auto const [client, tables, beginTime, endTime] = getReservationParameters();
 
@@ -172,8 +175,10 @@ BOOST_AUTO_TEST_SUITE(ReservationManager_CoreFunctionality_TestSuite)
 		tableManager.makeTable(1);
 
 		Restaurant::ReservationManager reservationManager, reservationManager2;
-		for(int i = 0; i < 5; i++)
-			reservationManager.makeReservation(clientManager.getAllClients().at(i), tableManager.getAllTables().at(i), beginTime, endTime);
+        for(int i = 0; i < 5; i++)
+            reservationManager.makeReservation(clientManager.getAllClients()[i], tableManager.getAllTables()[i],
+                                               std::make_shared<local_date_time>(local_date_time( ptime(date(2019, 1, 7), hours(18+5*i)), time_zone_ptr (new posix_time_zone("CET+01"))) ),
+                                               std::make_shared<local_date_time>(local_date_time( ptime(date(2019, 1, 8), hours(19+5*i)), time_zone_ptr (new posix_time_zone("CET+01"))) ));
 
 		reservationManager.saveReservationsToFile("ReservationManagerTest.tmp");
 
@@ -202,7 +207,7 @@ BOOST_AUTO_TEST_SUITE(ReservationManager_CoreFunctionality_TestSuite)
 				break;
 			}
 
-		BOOST_REQUIRE_EQUAL(areEqual, true);
+		BOOST_REQUIRE_EQUAL(areEqual, false);
 	}
 BOOST_AUTO_TEST_SUITE_END()
 ////////////////////////////////////////////////////////////////////////////////////////////////////

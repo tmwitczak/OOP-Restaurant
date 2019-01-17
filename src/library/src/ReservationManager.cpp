@@ -23,7 +23,7 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
     std::vector<Table_Ptr> tables;
     tables.push_back(table);
 
-    if( endTime < beginTime ) // TODO < or > ?
+    if( *endTime < *beginTime ) // TODO < or > ?
         throw  Restaurant::RestaurantException("EndTime can not be before BeginTime!");
 
 
@@ -31,8 +31,8 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
     {
         for(auto &reservation : reservationRepository.findReservationsByTable(table))
         {
-            if( ((reservation->getBeginTime() >= beginTime) && (reservation->getBeginTime() <= endTime))
-                ||((reservation->getEndTime()   >= beginTime) && (reservation->getEndTime()   <= endTime)))
+            if( ((*reservation->getBeginTime() >= *beginTime) && (*reservation->getBeginTime() <= *endTime))
+                ||((*reservation->getEndTime()   >= *beginTime) && (*reservation->getEndTime()   <= *endTime)))
                 throw Restaurant::RestaurantException("This table is unavailable at this time!");
         }
     }
@@ -52,7 +52,7 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
     Restaurant::Reservation_Ptr reservation = std::make_shared<Restaurant::Reservation>(checkClient(client),
                                                                                         checkTables(tables),
                                                                                         checkBeginTime(beginTime), checkEndTime(endTime));
-    if( endTime < beginTime )
+    if( *endTime < *beginTime )
         throw  Restaurant::RestaurantException("EndTime can not be before BeginTime!");
 
 
@@ -60,8 +60,8 @@ Restaurant::ReservationManager::makeReservation(const Restaurant::Client_Ptr &cl
     {
         for(auto &reservation : reservationRepository.findReservationsByTable(table))
         {
-            if( ((reservation->getBeginTime() >= beginTime) && (reservation->getBeginTime() <= endTime))
-                ||((reservation->getEndTime()   >= beginTime) && (reservation->getEndTime()   <= endTime)))
+            if( ((*reservation->getBeginTime() >= *beginTime) && (*reservation->getBeginTime() <= *endTime))
+                ||((*reservation->getEndTime()   >= *beginTime) && (*reservation->getEndTime()   <= *endTime)))
                 throw Restaurant::RestaurantException("This table is unavailable at this time!");
         }
     }

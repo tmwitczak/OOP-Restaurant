@@ -85,11 +85,21 @@ void Restaurant::ReservationRepository::readFromFile(std::string const &filename
 				tables.push_back(std::make_shared<Restaurant::Table>(seatCount));
 		}
 
-		std::string beginTimeStr, endTimeStr;
-		file >> beginTimeStr;
+		std::string beginTimeStr1, beginTimeStr2, beginTimeStr3, beginTimeStr, endTimeStr, endTimeStr1, endTimeStr2, endTimeStr3;
+		file >> beginTimeStr1;
 		file.get();
-		file >> endTimeStr;
+		file >> beginTimeStr2;
 		file.get();
+		file >> beginTimeStr3;
+		file.get();
+		beginTimeStr = beginTimeStr1 + " " + beginTimeStr2 + " " + beginTimeStr3 ;
+		file >> endTimeStr1;
+		file.get();
+		file >> endTimeStr2;
+		file.get();
+		file >> endTimeStr3;
+		file.get();
+		endTimeStr = endTimeStr1 + " " + endTimeStr2 + " " + endTimeStr3;
 
 		std::stringstream str;
 		str.str(beginTimeStr);
