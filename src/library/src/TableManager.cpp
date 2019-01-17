@@ -35,20 +35,20 @@ void Restaurant::TableManager::removeTable(Restaurant::Table_Ptr const &table)
 std::vector<Restaurant::Table_Ptr>
 Restaurant::TableManager::findTableBySeatCount(int const &seatCount)
 {
-    return {};//tableRepository.findTableBySeatCount(seatCount);
+    return tableRepository.findTableBySeatCount(seatCount);
 }
 //--------------------------------------------------------------------------------------------------
 void Restaurant::TableManager::saveTablesToFile(std::string const &filename) const
 {
-    // tableRepository.saveToFile(filename);
-    std::ofstream outFile(filename, std::ios::binary);
-    for(auto &table : this->getAllTables()) outFile << table->getSeatCount() << " ";
+    tableRepository.saveToFile(filename);
+   /* std::ofstream outFile(filename, std::ios::binary);
+    for(auto &table : this->getAllTables()) outFile << table->getSeatCount() << " ";*/
 }
 //--------------------------------------------------------------------------------------------------
 void Restaurant::TableManager::readTablesFromFile(std::string const &filename)
 {
-    //tableRepository.readFromFile(filename);
-    std::ifstream file;
+    tableRepository.readFromFile(filename);
+    /*std::ifstream file;
     file.open(filename);
     while(file.good())
     {
@@ -61,7 +61,7 @@ void Restaurant::TableManager::readTablesFromFile(std::string const &filename)
             checkseatCount(seatCount);
         }
     }
-    file.close();
+    file.close();*/
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Table_Ptr> Restaurant::TableManager::getAllTables() const
