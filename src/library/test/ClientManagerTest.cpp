@@ -235,5 +235,15 @@ BOOST_AUTO_TEST_SUITE(ClientManager_Exceptions_TestSuite)
 
 		BOOST_REQUIRE_EQUAL(message, "Client type must be either \"basic\" or \"premium\"!");
 	}
+    /*BOOST_AUTO_TEST_CASE(ClientManager_MakeClientAndSaveToFile_TestCase)
+    {
+        Restaurant::ClientManager clientManager;
+
+        Restaurant::Client_Ptr client = clientManager.makeClient("John", "Smith",
+                                                                 "123456789", "basic");
+        clientManager.saveClientsToFile("~/clients.txt");
+
+        //BOOST_REQUIRE_EQUAL(compareVectors({ client }, allClients), true);
+    }*/
 BOOST_AUTO_TEST_SUITE_END()
 ////////////////////////////////////////////////////////////////////////////////////////////////////

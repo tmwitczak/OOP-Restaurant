@@ -102,12 +102,43 @@ Restaurant::ReservationManager::findReservationsByTable(Restaurant::Table_Ptr ta
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ReservationManager::saveReservationsToFile(std::string const &filename) const
 {
-
+    //reservationRepository.saveToFile(filename);
+    std::ofstream outFile(filename, std::ios::binary);
+    for(auto &reservation : this->getAllReservations())
+    {
+        outFile << this->getInfo() << "\n";
+        for(auto &table : reservation->getTables())
+        {
+            outFile << table->getSeatCount();
+        }
+        outFile << "\n" << reservation->getBeginTime() << reservation->getEndTime() << "\n\n";
+    }
 }
 //--------------------------------------------------------------------------------------------------
 void Restaurant::ReservationManager::readReservationsFromFile(std::string const &filename)
 {
+    //reservationRepository.readFromFile(filename);
+    std::ifstream file;
+    file.open(filename);
+    while(file.good())
+    {
+        std::string firstName, lastName, telephoneNumber, clientType;
+        file >> firstName;
+        file.get();
+        file >> lastName;
+        file.get();
+        file >> telephoneNumber;
+        file.get();
+        file >> clientType;
+        file.get();
+        file.get();
 
+        if(file.good())
+        {
+
+        }
+    }
+    file.close();
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Reservation_Ptr> Restaurant::ReservationManager::getAllReservations() const

@@ -4,6 +4,8 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <fstream>
+
 //--------------------------------------------------------------------------------------------------
 namespace Restaurant
 {
@@ -51,7 +53,8 @@ void Restaurant::Repository<T>::remove(T const &element)
 template <typename T>
 void Restaurant::Repository<T>::saveToFile(std::string const &filename) const
 {
-	// TODO: Implement void Restaurant::Repository<T>::saveToFile(std::string filename) const
+	std::ofstream outFile(filename);
+	for(const auto &e : elements) outFile << e << "\n";
 }
 //--------------------------------------------------------------------------------------------------
 template <typename T>

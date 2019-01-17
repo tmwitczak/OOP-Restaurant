@@ -40,12 +40,28 @@ Restaurant::TableManager::findTableBySeatCount(int &seatCount)
 //--------------------------------------------------------------------------------------------------
 void Restaurant::TableManager::saveTablesToFile(std::string const &filename) const
 {
-    tableRepository.saveToFile(filename);
+    // tableRepository.saveToFile(filename);
+    std::ofstream outFile(filename, std::ios::binary);
+    for(auto &table : this->getAllTables()) outFile << table->getSeatCount() << " ";
 }
 //--------------------------------------------------------------------------------------------------
 void Restaurant::TableManager::readTablesFromFile(std::string const &filename)
 {
-    tableRepository.readFromFile(filename);
+    //tableRepository.readFromFile(filename);
+    std::ifstream file;
+    file.open(filename);
+    while(file.good())
+    {
+        int seatCount;
+        file >> seatCount;
+        file.get();
+
+        if(file.good())
+        {
+            checkseatCount(seatCount);
+        }
+    }
+    file.close();
 }
 //--------------------------------------------------------------------------------------------------
 std::vector<Restaurant::Table_Ptr> Restaurant::TableManager::getAllTables() const
